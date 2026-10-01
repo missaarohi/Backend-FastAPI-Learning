@@ -4,7 +4,7 @@ import "./App.css";
 import TaglineSection from "./TaglineSection";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://glowing-acorn-7vvvprj5r454hp9w9-8000.app.github.dev",
 });
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/products/");
+      const res = await api.get("/products");
       setProducts(res.data);
       setError("");
     } catch (err) {
@@ -61,7 +61,7 @@ function App() {
     const run = async () => {
       setLoading(true);
       try {
-        const res = await api.get("/products/");
+        const res = await api.get("/products");
         setProducts(res.data);
         setError("");
       } catch (err) {
@@ -136,7 +136,7 @@ function App() {
     setError("");
     try {
       if (editId) {
-        await api.put(`/products/${editId}`, {
+        await api.put(`/products?id=${editId}`, {
           ...form,
           id: Number(form.id),
           price: Number(form.price),
@@ -144,7 +144,7 @@ function App() {
         });
         setMessage("Product updated successfully");
       } else {
-        await api.post("/products/", {
+        await api.post("/products", {
           ...form,
           id: Number(form.id),
           price: Number(form.price),
@@ -182,7 +182,7 @@ function App() {
     setMessage("");
     setError("");
     try {
-      await api.delete(`/products/${id}`);
+      await api.delete(`/products?id=${id}`);
       setMessage("Product deleted successfully");
       fetchProducts();
     } catch (err) {
